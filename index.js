@@ -1,11 +1,13 @@
 'use strict';
 
-const text =
-  'Lorem ipsum dolor sit amet,<br>consectetur adipiscing elit,<br>sed do eiusmod tempor incididunt<br>ut labore et dolore magna aliqua.';
+const text = 'Lorem ipsum dolor sit amet,<br>consectetur adipiscing elit';
+const video = document.getElementById('video');
+let isPlaying = true;
 
 function typeText(id) {
   const letters = text.replaceAll('<br>', '*').split('');
   const el = document.getElementById(id);
+
   (function addLetter() {
     if (letters.length > 0) {
       const letter = letters.shift();
@@ -19,21 +21,10 @@ function typeText(id) {
       addLetter();
     }
   })();
+
   const children = [...el.children];
-
   children[0].classList.add('animated');
-  const video = document.getElementById('video');
-  let isPlaying = true;
-
-  video.onplaying = (event) => {
-    isPlaying = true;
-    console.log('playing');
-  };
-
-  video.onpause = (event) => {
-    isPlaying = false;
-    console.log('paused');
-  };
+  el.classList.add('animated-wrapper');
 
   (function addAnimation(child) {
     child.addEventListener('animationend', () => {
@@ -56,8 +47,20 @@ function typeText(id) {
   })(children[0]);
 }
 
-video.oncanplay = (event) => {
+video.onplaying = (event) => {
+  isPlaying = true;
+  console.log('playing2');
   setTimeout(() => {
     typeText('str');
-  }, 3000);
+    setTimeout(() => {
+      const el = document.getElementById('str');
+      el.classList.remove('animated-wrapper');
+      el.innerHTML = '';
+    }, 3000);
+  }, 800);
+};
+
+video.onpause = (event) => {
+  isPlaying = false;
+  console.log('paused');
 };

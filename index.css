@@ -3,6 +3,7 @@ div {
   text-align: center;
   flex-wrap: nowrap;
   animation: 1s slideUp forwards;
+  opacity: 0;
 }
 
 .letter {
@@ -12,16 +13,37 @@ div {
 
 .animated {
   display: inline-block;
-  animation: 0.1s slideUp forwards;
+  animation: 0.03s slideUp forwards;
+}
+
+.animated-wrapper {
+  display: inline-block;
+  animation: 3s appear forwards;
+  opacity: 1;
 }
 
 @keyframes slideUp {
   0% {
     opacity: 0;
-    transform: translateY(100%);
+    transform: translateY(200%);
   }
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes appear {
+  0% {
+    transform: translateY(-200%);
+  }
+  15% {
+    transform: translateY(0);
+  }
+  85% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-200%);
   }
 }
